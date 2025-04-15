@@ -1,0 +1,20 @@
+
+{
+  "pipeline_id": 41928,
+  "ref": "main",
+  "retry_count": 1,
+  "stages": {
+    "build": {
+      "status": "done",
+      "updated": "2025-04-13T09:15:12"
+    },
+    "test": {
+      "status": "in_progress",
+      "updated": "2025-04-13T09:18:34"
+    },
+    "deploy": {
+      "status": "pending",
+      "updated": null
+    }
+  }
+}

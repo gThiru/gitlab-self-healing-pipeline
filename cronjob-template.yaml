@@ -1,0 +1,26 @@
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ci-watchdog-cron
+spec:
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: watchdog
+            image: python:3.9
+            command: ["python", "/mnt/scripts/gitlab_pipeline_watchdog_resume_multi.py"]
+            volumeMounts:
+            - name: ci-state
+              mountPath: /mnt/ci-state
+            envFrom:
+            - secretRef:
+                name: ci-watchdog-secrets
+          restartPolicy: OnFailure
+          volumes:
+          - name: ci-state
+            persistentVolumeClaim:
+              claimName: ci-state-pvc

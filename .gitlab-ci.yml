@@ -1,0 +1,37 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  before_script:
+    - source ./update_stage_status.sh
+  script:
+    - update_stage_status build in_progress
+    - echo "Build job"
+    - update_stage_status build done
+  rules:
+    - if: '$RESUME_STAGE == "build" || $RESUME_STAGE == ""'
+
+test:
+  stage: test
+  before_script:
+    - source ./update_stage_status.sh
+  script:
+    - update_stage_status test in_progress
+    - echo "Test job"
+    - update_stage_status test done
+  rules:
+    - if: '$RESUME_STAGE == "test" || $RESUME_STAGE == ""'
+
+deploy:
+  stage: deploy
+  before_script:
+    - source ./update_stage_status.sh
+  script:
+    - update_stage_status deploy in_progress
+    - echo "Deploy job"
+    - update_stage_status deploy done
+  rules:
+    - if: '$RESUME_STAGE == "deploy" || $RESUME_STAGE == ""'
